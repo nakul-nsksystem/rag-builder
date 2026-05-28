@@ -301,10 +301,6 @@ Docker使用の場合、コンテナが起動しているか確認：`docker ps`
 
 ---
 
-## ライセンス
-
-MIT - 自由に使用・改変・配布可能。
-
 ---
 
 ---
@@ -608,6 +604,3 @@ If using Docker, make sure containers are running: `docker ps`
 
 ---
 
-## License
-
-MIT - Do whatever you want.
