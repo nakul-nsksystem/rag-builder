@@ -1,0 +1,49 @@
+services:
+  qdrant:
+    image: qdrant/qdrant
+    container_name: ${PROJECT_NAME:-rag}-qdrant
+    ports:
+      - "${QDRANT_PORT:-6533}:6333"
+    volumes:
+      - ./vectors/qdrant-data:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+    restart: unless-stopped
+    networks:
+      - ${PROJECT_NAME:-rag}-network
+
+  rag-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-rag}-api
+    ports:
+      - "${API_PORT:-8769}:8769"
+    volumes:
+      - ./data:/app/data
+      - ./vectors:/app/vectors
+    environment:
+      - QDRANT_URL=http://${PROJECT_NAME:-rag}-qdrant:6333
+      - QDRANT_COLLECTION=${COLLECTION_NAME:-rag_collection}
+      - DATA_PATH=/app/data/${DATA_FILE:-exported_data.json}
+      - LLM_ENDPOINT=http://host.docker.internal:1234/v1
+      - LLM_TYPE=lm_studio
+      - LLM_MODEL=${LLM_MODEL:-llama-3}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE:-0.2}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-BAAI/bge-m3}
+      - EMBEDDING_DEVICE=${EMBEDDING_DEVICE:-cpu}
+      - COLLECTION_NAME=${COLLECTION_NAME:-rag_collection}
+      - API_PORT=8769
+      - QDRANT_TIMEOUT=60
+    depends_on:
+      qdrant:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - ${PROJECT_NAME:-rag}-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  ${PROJECT_NAME:-rag}-network:
+    driver: bridge

@@ -1,0 +1,35 @@
+[
+  {
+    "text": "Device: Printer Model X500. Error Code: E001. Problem: Paper jam in tray 2. Solution: Removed paper from tray and cleaned rollers.",
+    "metadata": {
+      "report_id": 1,
+      "report_cd": "RPT-001",
+      "device": "Printer X500",
+      "error_code": "E001",
+      "work_symptom": "Paper jam in tray 2",
+      "work_detail": "Removed paper from tray and cleaned rollers"
+    }
+  },
+  {
+    "text": "Device: Laptop ThinkPad T14. Error Code: E002. Problem: Battery not charging. Solution: Replaced battery cable and updated BIOS.",
+    "metadata": {
+      "report_id": 2,
+      "report_cd": "RPT-002",
+      "device": "ThinkPad T14",
+      "error_code": "E002",
+      "work_symptom": "Battery not charging",
+      "work_detail": "Replaced battery cable and updated BIOS"
+    }
+  },
+  {
+    "text": "Device: Server Dell PowerEdge. Error Code: E003. Problem: Overheating. Solution: Replaced thermal paste and cleaned dust filters.",
+    "metadata": {
+      "report_id": 3,
+      "report_cd": "RPT-003",
+      "device": "Dell PowerEdge",
+      "error_code": "E003",
+      "work_symptom": "Server overheating",
+      "work_detail": "Replaced thermal paste and cleaned dust filters"
+    }
+  }
+]
