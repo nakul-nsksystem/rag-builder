@@ -3,47 +3,7 @@
 ---
 
 <a name="日本語"></a>
-# Rag Builder
 
-SQLダンプ、JSON、Excelファイルから完全なRAG（Retrieval Augmented Generation）システムを構築します。QdrantベクトルデータベースとFastAPIエンドポイントで検索結果を取得できます。
-
-## 特徴
-
-- **複数のデータフォーマット**: SQLダンプ、JSON、Excel、CSV
-- **GPU/CPU自動検出**: GPUではBGE-M3、CPUではmultilingual-e5-smallを使用
-- **ベクトル次元自動検出**: モデルに基づいて正しい埋め込み次元数を自動検出
-- **柔軟なメタデータ**: データからすべてのフィールドを保持
-- **Dockerまたはローカル**: Dockerですべてを実行、またはuvでローカル実行
-- **QdrantベクトルDB**: コサイン類似度による高速セマンティック検索
-
----
-
-## クイックスタート
-
-```bash
-# 1. リポジトリをクローンまたはコピー
-git clone https://github.com/nakul-nsksystem/rag-builder.git
-cd rag-builder
-
-# 2. .envを編集して設定
-cp .env.example .env
-# .envを編集 - LLM URL、データファイルなどを設定
-
-# 3. Dockerサービスを起動
-docker compose up -d
-
-# 4. Python依存関係をインストールしてデータを投入
-uv venv && source .venv/bin/activate
-uv pip install -r requirements.txt
-uv run python -m src.ingest
-
-# 5. APIを起動
-uv run uvicorn src.main:app --host 0.0.0.0 --port 8769
-```
-
-API：http://localhost:8769/docs
-
----
 
 ## AIコーディングツールへのインストール
 
