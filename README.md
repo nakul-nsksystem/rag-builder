@@ -63,37 +63,6 @@ cp -r rag-builder /path/to/your/project/.claude/skills/rag-builder
 
 ---
 
-## 設定
-
-`.env`ファイルを編集：
-
-```bash
-# LLM設定
-LLM_BASE_URL=http://host.docker.internal:1234/v1
-LLM_MODEL=llama-3
-LLM_TEMPERATURE=0.2
-
-# 埋め込み - GPU/CPUとベクトル次元を自動検出
-EMBEDDING_MODEL=BAAI/bge-m3
-EMBEDDING_DEVICE=cuda
-CPU_EMBEDDING_MODEL=intfloat/multilingual-e5-small
-VECTOR_SIZE=0  # 自動検出（カスタムモデルの場合は手動設定）
-
-# チャンキング
-CHUNK_SIZE=600
-CHUNK_OVERLAP=100
-
-# ベクトルデータベース
-QDRANT_URL=http://qdrant:6333
-COLLECTION_NAME=rag_collection
-
-# データ - ファイルをdata/フォルダに配置
-DATA_PATH=./data/exported_data.json
-
-# APIサーバー
-API_HOST=0.0.0.0
-API_PORT=8769
-```
 
 ### 埋め込みモデル
 
@@ -173,44 +142,9 @@ curl -X POST http://localhost:8769/rag/query \
 
 ---
 
-## Dockerコマンド
 
-```bash
-# サービス起動
-docker compose up -d
 
-# ログ表示
-docker compose logs -f
 
-# サービス停止
-docker compose down
-
-# 再構築（コード変更後）
-docker compose up -d --build
-
-# データ投入の手動実行
-docker compose exec rag-api uv run python -m src.ingest
-```
-
----
-
-## ローカル開発
-
-```bash
-# venv作成
-uv venv && source .venv/bin/activate
-
-# 依存関係インストール
-uv pip install -r requirements.txt
-
-# データ投入
-uv run python -m src.ingest
-
-# API実行
-uv run uvicorn src.main:app --reload
-```
-
----
 
 ## プロジェクト構造
 
@@ -236,28 +170,8 @@ rag-builder/
 
 ---
 
-## トラブルシューティング
 
-### "Module not found"
-```bash
-uv pip install -r requirements.txt
-```
 
-### "Data file not found"
-`DATA_PATH`がファイル場所と一致するか確認。
-
-### "Embedding dimension mismatch"
-`.env`の`VECTOR_SIZE`がモデルの次元数と一致するか確認、または`0`（自動）に設定。
-
-### "Cannot connect to Qdrant"
-```bash
-curl http://localhost:6533/health
-```
-Docker使用の場合、コンテナが起動しているか確認：`docker ps`
-
-### "Cannot connect to LLM"
-- LM Studioが起動していて「Start Server」をクリックしているか確認
-- `.env`の`LLM_BASE_URL`が正しいか確認
 
 ---
 
